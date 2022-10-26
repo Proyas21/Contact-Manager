@@ -11,13 +11,13 @@ pub struct AppArgs {
 pub enum MainActions {
     /// Add a contact
     Add(AddContact),
-    // /// Delete a contact
-    // Delete(DeleteContact),
+    /// Delete a contact
+    Delete(DeleteContact),
     // /// Edit a contact
     // Edit(EditContact),
     // /// Search a contact
     // Search(SearchContact),
-    // /// Shows all contacts
+    /// Shows all contacts
     Show,
 }
 
@@ -27,6 +27,11 @@ pub struct AddContact {
     pub name: String,
     /// Phone of the contact
     pub phone: String,
+}
+#[derive(Debug, Args)]
+pub struct DeleteContact {
+    /// Serial no. of the contact. Found in table in "show" command
+    pub serial: String,
 }
 
 // #[derive(Debug, Subcommand)]

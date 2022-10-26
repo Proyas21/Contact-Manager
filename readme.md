@@ -5,12 +5,13 @@ This is a hobby project inspired from https://github.com/Proyas21/Contact-Manage
 # Usage
 
 ```
-Usage: lab.exe <COMMAND>
+Usage: conman.exe <COMMAND>
 
 Commands:
-  add   Add a contact
-  show
-  help  Print this message or the help of the given subcommand(s)
+  add     Add a contact
+  delete  Delete a contact
+  show    Shows all contacts
+  help    Print this message or the help of the given subcommand(s)
 
 Options:
   -h, --help     Print help information

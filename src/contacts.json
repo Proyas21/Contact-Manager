@@ -1,18 +1,1 @@
-[
-    {
-        "name": "Pro",
-        "phone": "655546"
-    },
-    {
-        "name": "Pro",
-        "phone": "655546"
-    },
-    {
-        "name": "pro",
-        "phone": "02446466"
-    },
-    {
-        "name": "pro",
-        "phone": "02446466"
-    }
-]
+[{"name":"Pro","phone":"655546"},{"name":"Pro","phone":"655546"},{"name":"pro","phone":"02446466"},{"name":"pro","phone":"02446466"}]
