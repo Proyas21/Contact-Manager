@@ -1,10 +1,20 @@
-// #![allow(dead_code, unused)]
-
+/** TODO:
+*    - better search
+*    - <add> and <edit> both have to have two method of input
+*        i. directly from cli e.g: conman edit 3 name 00phone00
+*        ii. servey like what "conman edit 3" does now
+*    - closure problem
+*    - right way to cancel <edit>
+*    - empty string problem in "add" and "edit" command
+*/
 use clap::Parser;
 use comfy_table::{modifiers::UTF8_ROUND_CORNERS, presets::UTF8_FULL, Table};
 use serde::{Deserialize, Serialize};
 use serde_json;
-use std::fs;
+use std::{
+    fs,
+    io::{self, stdin, Write},
+};
 
 mod args;
 use crate::args::{AppArgs, MainActions};
@@ -21,7 +31,7 @@ fn main() {
     let contacts_json_string = fs::read_to_string("./src/contacts.json").unwrap();
     let mut contacts: Vec<Contact> = serde_json::from_str(&contacts_json_string).unwrap();
     println!("{:?}", args);
-    println!("____________________________________\n\n");
+    println!("__________________________________________\n\n");
 
     //* conman add <name> <phone>
     let mut add_contact_to_json = |name: &String, phone: &String| {
@@ -45,7 +55,9 @@ fn main() {
             .iter()
             .enumerate()
             .map(|(i, con)| (i, con))
-            .filter(|&con| con.1.name.to_lowercase().contains(key) || con.1.phone.contains(key))
+            .filter(|&con| {
+                con.1.name.to_lowercase().contains(&key.to_lowercase()) || con.1.phone.contains(key)
+            })
             .collect();
 
         // println!("{:?}", search_result);
@@ -61,6 +73,29 @@ fn main() {
         save_json("./src/contacts.json", &contacts);
         println!("Deletion done.");
     }
+    //* conman edit <serial>
+    fn edit_contact(mut contacts: Vec<Contact>, serial: usize) {
+        if serial < 1 || serial > contacts.len() {
+            println!("Provided value is not a valid number");
+            return;
+        }
+        fetch_json("./src/contacts.json", &mut contacts);
+        let mut name: String = String::new();
+        let mut phone: String = String::new();
+
+        print!("Name({})    :", contacts[serial - 1].name);
+        io::stdout().flush().unwrap();
+        stdin().read_line(&mut name).unwrap();
+        contacts[serial - 1].name = name.trim().to_string();
+
+        print!("Phone({})   :", contacts[serial - 1].phone);
+        io::stdout().flush().unwrap();
+        stdin().read_line(&mut phone).unwrap();
+        contacts[serial - 1].phone = phone.trim().to_string();
+
+        save_json("./src/contacts.json", &contacts);
+        println!("Changes saved.");
+    }
 
     match args.action {
         MainActions::Add(info) => add_contact_to_json(&info.name, &info.phone),
@@ -68,6 +103,9 @@ fn main() {
         MainActions::Search(info) => search_from_conacts(contacts, &info.keyword),
         MainActions::Delete(info) => {
             delete_contact(contacts, info.serial.parse::<usize>().unwrap_or(0))
+        }
+        MainActions::Edit(info) => {
+            edit_contact(contacts, info.serial.parse::<usize>().unwrap_or(0))
         }
     }
 }

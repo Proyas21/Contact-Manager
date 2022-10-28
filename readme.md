@@ -10,6 +10,8 @@ Usage: conman.exe <COMMAND>
 Commands:
   add     Add a contact
   delete  Delete a contact
+  edit    Edit a contact
+  search  Search a contact
   show    Shows all contacts
   help    Print this message or the help of the given subcommand(s)
 
