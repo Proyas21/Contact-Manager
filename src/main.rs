@@ -30,8 +30,8 @@ fn main() {
 
     let contacts_json_string = fs::read_to_string("./src/contacts.json").unwrap();
     let mut contacts: Vec<Contact> = serde_json::from_str(&contacts_json_string).unwrap();
-    println!("{:?}", args);
-    println!("__________________________________________\n\n");
+    // println!("{:?}", args);
+    // println!("__________________________________________\n\n");
 
     //* conman add <name> <phone>
     let mut add_contact_to_json = |name: &String, phone: &String| {
