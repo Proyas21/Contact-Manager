@@ -1,6 +1,6 @@
 This is a simple cli contact manager built with Rust and clap.
 
-This is a hobby project inspired from https://github.com/Proyas21/Contact-Manager
+This is a hobby project inspired from https://realpython.com/intermediate-python-project-ideas/#command-line-project-ideas
 
 # Usage
 
@@ -20,7 +20,7 @@ Options:
   -V, --version  Print version information
 ```
 
-# conman show
+## conman show
 
 ```
 ╭────┬──────────────────────────┬─────────────────╮
