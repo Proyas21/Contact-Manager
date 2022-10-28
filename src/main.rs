@@ -1,38 +1,25 @@
 // #![allow(dead_code, unused)]
 
 use clap::Parser;
-use comfy_table::modifiers::UTF8_ROUND_CORNERS;
-use comfy_table::presets::UTF8_FULL;
-use comfy_table::Table;
+use comfy_table::{modifiers::UTF8_ROUND_CORNERS, presets::UTF8_FULL, Table};
 use serde::{Deserialize, Serialize};
 use serde_json;
 use std::fs;
 
 mod args;
-use args::AppArgs;
-
-use crate::args::MainActions;
+use crate::args::{AppArgs, MainActions};
 
 #[derive(Debug, Clone, Serialize, Deserialize)]
 pub struct Contact {
     name: String,
     phone: String,
 }
-// pub struct Contacts [Contact]
 
 fn main() {
-    // let mut hello: Vec<i32> = (0..10).collect();
-    // let mut hello: [i32; 5] = [1, 2, 3, 4, 5];
-    // let args: Vec<String> = args().collect();
     let args = AppArgs::parse();
 
     let contacts_json_string = fs::read_to_string("./src/contacts.json").unwrap();
     let mut contacts: Vec<Contact> = serde_json::from_str(&contacts_json_string).unwrap();
-
-    // let contacts_json_string_towrite = serde_json::to_string(&contacts).unwrap();
-    // fs::write("./src/contacts.json", &contacts_json_string_towrite).unwrap();
-
-    // println!("🚀 ~ file: main.rs ~ line 23 ~ fnmain ~ args {:?}", args);
     println!("{:?}", args);
     println!("____________________________________\n\n");
 
@@ -51,6 +38,7 @@ fn main() {
         fetch_json("./src/contacts.json", &mut contacts);
         print_table_all(contacts);
     }
+    //* conman search <keyword>
     fn search_from_conacts(mut contacts: Vec<Contact>, key: &str) {
         fetch_json("./src/contacts.json", &mut contacts);
         let search_result: Vec<(usize, &Contact)> = contacts
@@ -63,6 +51,7 @@ fn main() {
         // println!("{:?}", search_result);
         print_table_from_tuple(search_result);
     }
+    //* conman delete <serial>
     fn delete_contact(mut contacts: Vec<Contact>, serial: usize) {
         if serial < 1 || serial > contacts.len() {
             println!("Provided value is not a valid number");
