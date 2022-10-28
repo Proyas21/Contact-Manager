@@ -15,8 +15,8 @@ pub enum MainActions {
     Delete(DeleteContact),
     // /// Edit a contact
     // Edit(EditContact),
-    // /// Search a contact
-    // Search(SearchContact),
+    /// Search a contact
+    Search(SearchContact),
     /// Shows all contacts
     Show,
 }
@@ -25,13 +25,18 @@ pub enum MainActions {
 pub struct AddContact {
     /// Name of the contact
     pub name: String,
-    /// Phone of the contact
+    /// Phone number of the contact
     pub phone: String,
 }
 #[derive(Debug, Args)]
 pub struct DeleteContact {
     /// Serial no. of the contact. Found in table in "show" command
     pub serial: String,
+}
+#[derive(Debug, Args)]
+pub struct SearchContact {
+    /// Keyword can be either name or phone number
+    pub keyword: String,
 }
 
 // #[derive(Debug, Subcommand)]
